@@ -110,7 +110,7 @@ build-options:
   ## Ignore micro extension tests (if you are using micro SAPI, default: false)
   # without-micro-ext-test: false
   ## UPX pack the binary (default: false)
-  with-upx-pack: true
+  with-upx-pack: false
   ## Set the micro.exe program icon (only for Windows, default: "")
   # with-micro-logo: ""
   ## Set micro SAPI as win32 mode, without this, micro SAPI will be compiled as a console application (only for Windows, default: false)
