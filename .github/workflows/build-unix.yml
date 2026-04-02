@@ -1,4 +1,4 @@
-name: "CI on Unix"
+name: 'CI on Unix'
 
 on:
   workflow_dispatch:
@@ -133,21 +133,21 @@ on:
         default: false
 
 env:
-    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
   define-build:
-    name: "Define Build Scripts"
+    name: 'Define Build Scripts'
     runs-on: ubuntu-latest
     outputs:
       run: ${{ steps.gendef.outputs.run }}
       download: ${{ steps.gendef.outputs.download }}
       build: ${{ steps.gendef.outputs.build }}
     steps:
-      - name: "Checkout"
-        uses: actions/checkout@v4
+      - name: 'Checkout'
+        uses: actions/checkout@v6.0.2
 
-      - name: "Define"
+      - name: 'Define'
         id: gendef
         run: |
           case "${{ inputs.os }}" in
@@ -229,15 +229,15 @@ jobs:
           echo 'build=./bin/spc-gnu-docker craft /app/config/spc/php-cli/php-8.5-cli.yml' >> "$GITHUB_OUTPUT"
           echo 'run='"$RUNS_ON" >> "$GITHUB_OUTPUT"
   build:
-    name: "Build ${{ inputs.php-version }} on ${{ inputs.os }}"
+    name: 'Build ${{ inputs.php-version }} on ${{ inputs.os }}'
     runs-on: ${{ needs.define-build.outputs.run }}
     needs: define-build
     timeout-minutes: 240
     steps:
-      - name: "Checkout"
-        uses: actions/checkout@v4
+      - name: 'Checkout'
+        uses: actions/checkout@v6.0.2
 
-      - name: "Setup PHP"
+      - name: 'Setup PHP'
         uses: shivammathur/setup-php@v2
         with:
           php-version: 8.5.4
@@ -248,7 +248,7 @@ jobs:
           phpts: nts
 
       - if: ${{ inputs['build-frankenphp'] == true }}
-        name: "Install go-xcaddy for FrankenPHP"
+        name: 'Install go-xcaddy for FrankenPHP'
         run: |
           case "${{ inputs.os }}" in
             linux-x86_64|linux-aarch64)
@@ -270,73 +270,74 @@ jobs:
 
       # Cache downloaded source
       - id: cache-download
-        uses: actions/cache@v4
+        # see: https://github.com/actions/cache/releases
+        uses: actions/cache@v5.0.4
         with:
           path: downloads
           key: php-dependencies-${{ inputs.os }}
-      - name: "Download sources"
+      - name: 'Download sources'
         run: ${{ needs.define-build.outputs.download }}
-      - name: "Build PHP"
+      - name: 'Build PHP'
         run: ${{ needs.define-build.outputs.build }}
-#      - name: Setup tmate session
-#        if: ${{ failure() }}
-#        uses: mxschmitt/action-tmate@v3
+      #      - name: Setup tmate session
+      #        if: ${{ failure() }}
+      #        uses: mxschmitt/action-tmate@v3
 
       # Upload debug logs
       - if: ${{ inputs.debug && failure() }}
-        name: "Upload build logs on failure"
-        uses: actions/upload-artifact@v4
+        name: 'Upload build logs on failure'
+        uses: actions/upload-artifact@v7.0.0
         with:
           name: spc-logs-${{ inputs.php-version }}-${{ inputs.os }}
           path: log/*.log
 
       # Upload cli executable
       - if: ${{ inputs.build-cli == true }}
-        name: "Upload PHP cli SAPI"
-        uses: actions/upload-artifact@v4
+        name: 'Upload PHP cli SAPI'
+        uses: actions/upload-artifact@v7.0.0
         with:
           name: php-cli-${{ inputs.php-version }}-${{ inputs.os }}
           path: buildroot/bin/php
 
       # Upload micro self-extracted executable
       - if: ${{ inputs.build-micro == true }}
-        name: "Upload PHP micro SAPI"
-        uses: actions/upload-artifact@v4
+        name: 'Upload PHP micro SAPI'
+        uses: actions/upload-artifact@v7.0.0
         with:
           name: php-micro-${{ inputs.php-version }}-${{ inputs.os }}
           path: buildroot/bin/micro.sfx
 
       # Upload fpm executable
       - if: ${{ inputs.build-fpm == true }}
-        name: "Upload PHP fpm SAPI"
-        uses: actions/upload-artifact@v4
+        name: 'Upload PHP fpm SAPI'
+        uses: actions/upload-artifact@v7.0.0
         with:
           name: php-fpm-${{ inputs.php-version }}-${{ inputs.os }}
           path: buildroot/bin/php-fpm
 
       # Upload frankenphp executable
       - if: ${{ inputs['build-frankenphp'] == true }}
-        name: "Upload FrankenPHP SAPI"
-        uses: actions/upload-artifact@v4
+        name: 'Upload FrankenPHP SAPI'
+        uses: actions/upload-artifact@v7.0.0
         with:
           name: php-frankenphp-${{ inputs.php-version }}-${{ inputs.os }}
           path: buildroot/bin/frankenphp
 
       # Upload extensions metadata
       - if: ${{ inputs['shared-extensions'] != '' }}
-        name: "Upload shared extensions"
-        uses: actions/upload-artifact@v4
+        name: 'Upload shared extensions'
+        uses: actions/upload-artifact@v7.0.0
         with:
           name: php-shared-ext-${{ inputs.php-version }}-${{ inputs.os }}
           path: |
             buildroot/modules/*.so
-      - uses: actions/upload-artifact@v4
-        name: "Upload License Files"
+      - uses: actions/upload-artifact@v7.0.0
+        name: 'Upload License Files'
         with:
           name: license-files-${{ inputs.php-version }}-${{ inputs.os }}
           path: buildroot/license/
-      - uses: actions/upload-artifact@v4
-        name: "Upload Build Metadata"
+      - uses: actions/upload-artifact@v7.0.0
+        name: 'Upload Build Metadata'
         with:
           name: build-meta-${{ inputs.php-version }}-${{ inputs.os }}
           path: |
