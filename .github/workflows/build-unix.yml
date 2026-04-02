@@ -219,7 +219,7 @@ jobs:
           fi
           echo 'download='"$DOWN_CMD" >> "$GITHUB_OUTPUT"
           # echo 'build='"$BUILD_CMD" >> "$GITHUB_OUTPUT"
-          echo 'build=./bin/spc craft .config/spc/php-cli/php-8.5-cli.yml' >> "$GITHUB_OUTPUT"
+          echo 'build=./bin/spc-gnu-docker craft .config/spc/php-cli/php-8.5-cli.yml' >> "$GITHUB_OUTPUT"
           echo 'run='"$RUNS_ON" >> "$GITHUB_OUTPUT"
   build:
     name: "Build ${{ inputs.php-version }} on ${{ inputs.os }}"
