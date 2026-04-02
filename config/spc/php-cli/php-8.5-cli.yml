@@ -118,6 +118,7 @@ build-options:
 
 ## Build options for shared extensions (list or comma-separated are both accepted)
 shared-extensions:
+  - amqp
   - mongodb
   - opentelemetry
   - pcov
