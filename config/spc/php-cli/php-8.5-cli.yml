@@ -1,0 +1,143 @@
+# PHP version to build (default: 8.4)
+php-version: 8.5.4
+# [REQUIRED] Static PHP extensions to build (list or comma-separated are both accepted)
+# static: apcu,bcmath,ctype,curl,dom,excimer,fileinfo,filter,ftp,hash,iconv,igbinary,imagick,json,libxml,mbstring,mongodb,opcache,openssl,pcntl,pcre,pdo,pdo_mysql,pdo_pgsql,pdo_sqlite,phar,posix,readline,redis,reflection,session,simplexml,tokenizer,xml,xmlwriter,zip,zlib
+# shared: mongodb,opentelemetry,pcov,spx,xdebug
+# extensions: apcu,bcmath,ctype,curl,dom,excimer,fileinfo,filter,ftp,hash,iconv,igbinary,imagick,json,libxml,mbstring,mongodb,opcache,openssl,pcntl,pcre,pdo,pdo_mysql,pdo_pgsql,pdo_sqlite,phar,posix,readline,redis,reflection,session,simplexml,tokenizer,xml,xmlwriter,zip,zlib,mongodb,opentelemetry,pcov,spx,xdebug
+extensions:
+# [static] extensions to build, included with the binary
+- apcu
+- bcmath
+- ctype
+- curl
+- dom
+- excimer
+- fileinfo
+- filter
+- ftp
+- hash
+- iconv
+- igbinary
+- imagick
+- json
+- libxml
+- mbstring
+- mongodb
+- opcache
+- openssl
+- pcntl
+- pcre
+- pdo
+- pdo_mysql
+- pdo_pgsql
+- pdo_sqlite
+- phar
+- posix
+- readline
+- redis
+- reflection
+- session
+- simplexml
+- tokenizer
+- xml
+- xmlwriter
+- zip
+- zlib
+# [shared] extensions to build
+- mongodb
+- opentelemetry
+- pcov
+- spx
+- xdebug
+
+# Extra libraries to build (list or comma-separated are both accepted)
+libs: []
+## [ext-curl] http3 support
+# - nghttp2
+# - nghttp3
+# - ngtcp2
+## [ext-gd] libraries to build, included with the binary
+# - freetype
+# - libjpeg
+# - libavif
+# - libwebp
+
+# [REQUIRED] Build SAPIs (list or comma-separated are both accepted)
+sapi: cli
+## Show full console output (default: false)
+debug: true
+## Build options (same as `build` command options, all options are optional)
+build-options:
+  ## Before build, remove all old build files and sources (default: false)
+  with-clean: false
+  ## Build with all suggested libraries (default: false)
+  with-suggested-libs: false
+  ## Build with all suggested extensions (default: false)
+  with-suggested-exts: false
+  ## Build extra shared extensions (list or comma-separated are both accepted)
+  build-shared:
+    - mongodb
+    - opentelemetry
+    - pcov
+    - spx
+    - xdebug
+  ## Build without stripping the binary (default: false)
+  no-strip: true
+  ## Disable Opcache JIT (default: false)
+  disable-opcache-jit: false
+  ## PHP configuration options (same as --with-config-file-path)
+  with-config-file-path: '/opt/php/8.5.4/cli/php.ini'
+  ## PHP configuration options (same as --with-config-file-scan-dir)
+  with-config-file-scan-dir: '/opt/php/8.5.4/cli/php.ini.d'
+  ## Hardcoded INI options for cli and micro SAPI (e.g. "memory_limit=4G", list accepted)
+  with-hardcoded-ini:
+    - expose_php=off
+    - user_agent=galawork-php
+    - pdo_mysql.default_socket=/var/run/mariadb/mariadbd.sock
+    - extension_dir=/opt/php/8.5.4/extensions
+    - opcache.enable=off
+    - opcache.enable_cli=off
+    - opcache.lockfile_path=/opt/php/8.5.4/data/opcache/opcache.lock
+    - opcache.blacklist_filename=/opt/php/8.5.4/data/opcache/blacklist.txt
+    - opcache.preload=/opt/php/8.5.4/data/opcache/preload.php
+    - max_memory_limit=-1
+    - memory_limit=4G
+    - curl.cainfo=/opt/php/8.5.4/ssl/cert.pem
+  ## Pretend micro SAPI as cli SAPI to avoid some frameworks to limit the usage of micro SAPI
+  # with-micro-fake-cli: false
+  ## Additional patch point injection files (e.g. "path/to/patch.php", list accepted)
+  # with-added-patch: [ ]
+  ## Ignore micro extension tests (if you are using micro SAPI, default: false)
+  # without-micro-ext-test: false
+  ## UPX pack the binary (default: false)
+  with-upx-pack: true
+  ## Set the micro.exe program icon (only for Windows, default: "")
+  # with-micro-logo: ""
+  ## Set micro SAPI as win32 mode, without this, micro SAPI will be compiled as a console application (only for Windows, default: false)
+  enable-micro-win32: false
+
+## Build options for shared extensions (list or comma-separated are both accepted)
+shared-extensions: [ ]
+
+## Download options
+download-options:
+  ## Use custom url for specified sources, format: "{source-name}:{url}" (e.g. "php-src:https://example.com/php-8.4.0.tar.gz")
+  # custom-url: [ ]
+  ## Use custom git repo for specified sources, format: "{source-name}:{branch}:{url}" (e.g. "php-src:master:https://github.com/php/php-src.git")
+  # custom-git: [ ]
+  ## Retries count for downloading sources (default: 5)
+  retry: 5
+  ## Use pre-built libraries if available (default: false)
+  prefer-pre-built: false
+  ## Do not download from alternative sources (default: false)
+  no-alt: false
+
+craft-options:
+  doctor: true
+  download: true
+  build: true
+
+## Extra environment variables
+# extra-env:
+#   # e.g. Use github token to avoid rate limit
+#   GITHUB_TOKEN: your-github-token
