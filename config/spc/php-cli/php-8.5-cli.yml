@@ -75,12 +75,12 @@ build-options:
   ## Build with all suggested extensions (default: false)
   with-suggested-exts: false
   ## Build extra shared extensions (list or comma-separated are both accepted)
-  build-shared:
-    - mongodb
-    - opentelemetry
-    - pcov
-    - spx
-    - xdebug
+  # build-shared: []
+    # - mongodb
+    # - opentelemetry
+    # - pcov
+    # - spx
+    # - xdebug
   ## Build without stripping the binary (default: false)
   no-strip: true
   ## Disable Opcache JIT (default: false)
