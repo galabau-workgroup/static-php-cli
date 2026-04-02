@@ -30,9 +30,16 @@ on:
         description: Extensions to build (comma separated)
         required: true
         type: string
+        # [20:22:37] [D] Extension [hash] is an builtin extension, it will be ignored.
+        # [20:22:37] [D] Extension [json] is a builtin extension, it will be ignored.
+        # [20:22:37] [D] Extension [pcre] is a builtin extension, it will be ignored.
+        # [20:22:37] [D] Extension [reflection] is a builtin extension, it will be ignored.
+        # default: 'apcu,bcmath,ctype,curl,dom,excimer,fileinfo,filter,ftp,hash,iconv,igbinary,imagick,json,libxml,mbstring,opcache,openssl,pcntl,pcre,pdo,pdo_mysql,pdo_pgsql,pdo_sqlite,phar,posix,readline,redis,reflection,session,simplexml,tokenizer,xml,xmlwriter,zip,zlib'
+        default: 'apcu,bcmath,ctype,curl,dom,excimer,fileinfo,filter,ftp,iconv,igbinary,imagick,libxml,mbstring,opcache,openssl,pcntl,pdo,pdo_mysql,pdo_pgsql,pdo_sqlite,phar,posix,readline,redis,session,simplexml,tokenizer,xml,xmlwriter,zip,zlib'
       shared-extensions:
         description: Shared extensions to build (optional, comma separated)
         type: string
+        default: 'mongodb,opentelemetry,pcov,spx,xdebug'
       extra-libs:
         description: Extra libraries to build (optional, comma separated)
         type: string
