@@ -117,7 +117,12 @@ build-options:
   enable-micro-win32: false
 
 ## Build options for shared extensions (list or comma-separated are both accepted)
-shared-extensions: [ ]
+shared-extensions:
+  - mongodb
+  - opentelemetry
+  - pcov
+  - spx
+  - xdebug
 
 ## Download options
 download-options:
