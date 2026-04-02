@@ -39,7 +39,7 @@ on:
       shared-extensions:
         description: Shared extensions to build (optional, comma separated)
         type: string
-        default: 'mongodb,opentelemetry,pcov,spx,xdebug'
+        default: 'amqp,mongodb,opentelemetry,pcov,spx,xdebug'
       extra-libs:
         description: Extra libraries to build (optional, comma separated)
         type: string
