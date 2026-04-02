@@ -43,12 +43,12 @@ extensions:
 - xmlwriter
 - zip
 - zlib
-# [shared] extensions to build
-- mongodb
-- opentelemetry
-- pcov
-- spx
-- xdebug
+## [shared] extensions to build
+# - mongodb
+# - opentelemetry
+# - pcov
+# - spx
+# - xdebug
 
 # Extra libraries to build (list or comma-separated are both accepted)
 libs: []
